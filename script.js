@@ -18,13 +18,13 @@ $(document).ready(function(){
       {group: 'quant', value: 'machine-learning', name: 'machine learning'},
       {group: 'quant', value: 'network-analysis', name: 'network analysis'},
       {group: 'use-case', value: 'customer-churn-prediction', name: 'customer churn prediction'},
-      {group: 'use-case', value: 'credit-risk-assessment', name: 'credit risk assessment'},
+      /*{group: 'use-case', value: 'credit-risk-assessment', name: 'credit risk assessment'},*/
       /*{group: 'use-case', value: 'customer-segmentation', name: 'customer segmentation'},*/
       {group: 'use-case', value: 'dashboards-web-apps', name: 'dashboards and web apps'},
       /*{group: 'use-case', value: 'demand-forecasting', name: 'demand forecasting'},*/
       {group: 'use-case', value: 'optimisation', name: 'optimisation'},
       {group: 'use-case', value: 'recommender-engine', name: 'recommender engine'},
-      {group: 'use-case', value: 'productivity-tools', name: 'productivity tools'},
+      /*{group: 'use-case', value: 'productivity-tools', name: 'productivity tools'},*/
       {group: 'use-case', value: 'qualitative-choice-analysis', name: 'qualitative choice analysis'}
     ],
     optgroups: [
@@ -43,7 +43,7 @@ $(document).ready(function(){
   });
 
   function selectFilter(selection, content){
-    for(var i = 0 ; i < selection.length; i++){
+    for (var i = 0 ; i < selection.length; i++) {
        if($.inArray(selection[i], content) == -1) return false;
     }
     return true;
