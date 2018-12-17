@@ -115,6 +115,6 @@ ul {
   margin: 0;
 }
 
-a, a:visited {
+a, a:visited, a:-webkit-any-link {
     text-decoration: none;
 }
