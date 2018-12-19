@@ -3,6 +3,7 @@ var isChrome = !!window.chrome;
 $(document).ready(function(){
 
   if (!isChrome) {
+    $('.portfolio-link').hide();
     $('dialog').hide();
   }
 
