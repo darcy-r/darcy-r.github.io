@@ -116,5 +116,25 @@ ul {
 }
 
 a, a:visited, a:-webkit-any-link {
-    text-decoration: none;
+  text-decoration: none;
+  color: black;
+}
+
+a.portfolio-link {
+  font-style: italic;
+  text-decoration: underline;
+  color: black;
+  cursor: pointer;
+}
+
+dialog {
+  position: fixed;
+  max-height: 80vh;
+  max-width: 80vw;
+  border: none;
+}
+
+.image {
+  max-height: 100%;
+  max-width: 100%;
 }
