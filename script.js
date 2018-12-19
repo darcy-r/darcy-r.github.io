@@ -1,4 +1,10 @@
+var isChrome = !!window.chrome;
+
 $(document).ready(function(){
+
+  if (!isChrome) {
+    $('dialog').hide();
+  }
 
   var breakHeaders = document.getElementsByClassName("break-header")
   for (var i = 0 ; i < breakHeaders.length; i++) {
