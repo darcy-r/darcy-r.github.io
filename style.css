@@ -128,13 +128,24 @@ a.portfolio-link {
 }
 
 dialog {
+  display: none;
   position: fixed;
-  max-height: 80vh;
-  max-width: 80vw;
+  top: 0px;
+  left: 0px;
+  right: 0px;
   border: none;
+  background-color: rgba(0, 0, 0, 0.66);
+  z-index: 1;
+}
+
+dialog > a {
+  color: white;
+  font-size: 2rem;
+  position: absolute;
+  cursor: pointer;
 }
 
 .image {
-  max-height: 100%;
-  max-width: 100%;
+  display: none;
+  margin: auto;
 }

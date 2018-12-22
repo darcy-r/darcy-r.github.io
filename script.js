@@ -2,10 +2,13 @@ var isChrome = !!window.chrome;
 
 $(document).ready(function(){
 
-  if (!isChrome) {
-    $('.portfolio-link').hide();
-    $('dialog').hide();
+  // apply styling based on dimensions (done in JS because of issues in Safari with vh and vw in CSS)
+  var dialogs = document.getElementsByTagName('dialog');
+  for (let dialog of dialogs) {
+    dialog.style.width = window.innerWidth + 'px';
+    dialog.style.height = window.innerHeight + 'px';
   }
+  $('dialog > a').css('top', window.innerHeight / 2);
 
   var breakHeaders = document.getElementsByClassName("break-header")
   for (var i = 0 ; i < breakHeaders.length; i++) {
@@ -75,32 +78,73 @@ $(document).ready(function(){
   for (let link of portfolioLinks) {
     link.addEventListener('click', function() {
       var modal = link.nextElementSibling;
-      modal.showModal();
-      var childrenImages = modal.children;
-      console.log(childrenImages.length);
+      // modal.showModal(); // not currently supported in browsers other than Chrome
+      modal.style.display = 'block';
+      var childrenImages = modal.getElementsByTagName('img');
       for (let child of childrenImages) {
-        child.style.display='none';
+        child.style.maxHeight = Math.round(window.innerHeight * 0.80) + 'px';
+        child.style.maxWidth = Math.round(window.innerWidth * 0.80) + 'px';
+        child.style.marginTop = Math.round(window.innerHeight * 0.10) + 'px';
+      }
+      setPaginationArrows = function() {
+        var imgWidth = $('dialog > img').filter(':visible').width();
+        $('dialog > a.pagination-left').css('left', ((window.innerWidth - imgWidth) / 2) - 25);
+        $('dialog > a.pagination-right').css('right', ((window.innerWidth - imgWidth) / 2) - 25);
+        $('dialog > a').show();
+        if (i == 0) {
+          $('a.pagination-left').hide();
+        }
+        if (i == childrenImages.length - 1) {
+          $('a.pagination-right').hide();
+        }
+      }
+      displayNextImage = function() {
+        childrenImages[i].style.display = 'block';
+        setPaginationArrows();
       }
       var i = 0;
-      childrenImages[i].style.display='block';
+      displayNextImage();
       document.addEventListener('keydown', (event) => {
         if (event.keyCode == '39' & i < childrenImages.length - 1) {
-          childrenImages[i].style.display='none';
+          childrenImages[i].style.display = 'none';
           i = i + 1;
-          childrenImages[i].style.display='block';
+          displayNextImage();
         }
         if (event.keyCode == '37' & i > 0) {
-          childrenImages[i].style.display='none';
+          childrenImages[i].style.display = 'none';
           i = i - 1;
-          childrenImages[i].style.display='block';
+          displayNextImage();
+        }
+        if (event.keyCode == '27') {
+          modal.style.display = 'none';
         }
       });
+      var paginationArrows = $('dialog > a');
+      for (arrow of paginationArrows) {
+        arrow.addEventListener('click', function() {
+          if (this.className == 'pagination-right' & i < childrenImages.length - 1) {
+            childrenImages[i].style.display = 'none';
+            i = i + 1;
+            displayNextImage();
+          }
+          if (this.className == 'pagination-left' & i > 0) {
+            childrenImages[i].style.display = 'none';
+            i = i - 1;
+            displayNextImage();
+          }
+        });
+      }
       window.onclick = function(event) {
         if (event.target == modal) {
-          modal.close();
+          // modal.close(); // not currently supported in browsers other than Chrome
+          modal.style.display = 'none';
         }
       }
     });
   }
+
+  // console.log('the width of the image is: ' + childrenImages[i].offsetWidth);
+
+
 
 });
