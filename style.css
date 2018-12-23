@@ -168,5 +168,6 @@ dialog > a {
 
 .image {
   display: none;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 }

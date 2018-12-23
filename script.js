@@ -2,21 +2,15 @@ var isChrome = !!window.chrome;
 
 $(document).ready(function(){
 
-  // apply styling based on dimensions (done in JS because of issues in Safari with vh and vw in CSS)
-  var dialogs = document.getElementsByTagName('dialog');
-  for (let dialog of dialogs) {
-    dialog.style.width = window.innerWidth + 'px';
-    dialog.style.height = window.innerHeight + 'px';
-  }
-  $('dialog > a').css('top', window.innerHeight / 2);
-
-  var breakHeaders = document.getElementsByClassName("break-header")
-  for (var i = 0 ; i < breakHeaders.length; i++) {
-    breakHeaders[i].addEventListener('click', function() {
+  // display content below a header when the header is clicked on
+  var breakHeaders = document.getElementsByClassName('break-header');
+  for (let header of breakHeaders) {
+    header.addEventListener('click', function() {
       $(this).next().slideToggle();
     });
   }
 
+  // render the select input in the portfolio section as a selectize.js input
   $('#filter').selectize({
     persist: false,
     maxItems: null,
@@ -52,20 +46,22 @@ $(document).ready(function(){
     delimiter: ','
   });
 
-  function selectFilter(selection, content){
+  // define a function to determine if portfolio content matches the select input
+  function contentMatchesInput(selection, content){
     for (var i = 0 ; i < selection.length; i++) {
        if($.inArray(selection[i], content) == -1) return false;
     }
     return true;
   }
 
+  // filter portfolio content in response to select input
   $('#filter').change(function(){
     var selectedClasses = $(this).val();
     $('.portfolio.internal-grid > div').each(function() {
       if($.isEmptyObject(selectedClasses)) {
         $(this).show()
       } else {
-        if (selectFilter(selectedClasses, $(this).attr('data-filter').split(' '))) {
+        if (contentMatchesInput(selectedClasses, $(this).attr('data-filter').split(' '))) {
           $(this).show()
         } else {
           $(this).hide()
@@ -74,20 +70,23 @@ $(document).ready(function(){
     });
   });
 
+  // display images as a modal when the relevant link is clicked on
   var portfolioLinks = document.getElementsByClassName('portfolio-link');
   for (let link of portfolioLinks) {
     link.addEventListener('click', function() {
+
+      // correclty size and layout the dialog element
       var modal = link.nextElementSibling;
       // modal.showModal(); // not currently supported in browsers other than Chrome
       modal.style.display = 'block';
+      modal.style.width = window.innerWidth + 'px';
+      modal.style.height = Math.round(window.innerHeight * 1.10) + 'px';
       var childrenImages = modal.getElementsByTagName('img');
-      for (let child of childrenImages) {
-        child.style.maxHeight = Math.round(window.innerHeight * 0.80) + 'px';
-        child.style.maxWidth = Math.round(window.innerWidth * 0.80) + 'px';
-        child.style.marginTop = Math.round(window.innerHeight * 0.10) + 'px';
-      }
+
+      // define function to correctly align pagination arrows with displayed image
       setPaginationArrows = function() {
         var imgWidth = $('dialog > img').filter(':visible').width();
+        $('dialog > a').css('top', window.innerHeight / 2);
         $('dialog > a.pagination-left').css('left', ((window.innerWidth - imgWidth) / 2) - 25);
         $('dialog > a.pagination-right').css('right', ((window.innerWidth - imgWidth) / 2) - 25);
         $('dialog > a').show();
@@ -98,12 +97,22 @@ $(document).ready(function(){
           $('a.pagination-right').hide();
         }
       }
+
+      // define function to correctly display image within window dimensions
       displayNextImage = function() {
         childrenImages[i].style.display = 'block';
+        childrenImages[i].style.maxHeight = Math.round(window.innerHeight * 0.80) + 'px';
+        childrenImages[i].style.maxWidth = Math.round(window.innerWidth * 0.80) + 'px';
+        childrenImages[i].style.marginTop = Math.round((window.innerHeight - childrenImages[i].offsetHeight) / 2) + 'px';
+        console.log('the margin from the top is: ' + Math.round((window.innerHeight - childrenImages[i].offsetHeight) / 2));
         setPaginationArrows();
       }
+
+      // display first image when modal is opened
       var i = 0;
       displayNextImage();
+
+      // change the displayed image in response to arrow-key keystrokes and pagination arrow clicks
       document.addEventListener('keydown', (event) => {
         if (event.keyCode == '39' & i < childrenImages.length - 1) {
           childrenImages[i].style.display = 'none';
@@ -142,9 +151,5 @@ $(document).ready(function(){
       }
     });
   }
-
-  // console.log('the width of the image is: ' + childrenImages[i].offsetWidth);
-
-
 
 });
