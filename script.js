@@ -143,13 +143,25 @@ $(document).ready(function(){
           }
         });
       }
-      window.addEventListener('click', function(event) {
+      modal.addEventListener('click', function(event) {
         if (event.target == modal) {
           // modal.close(); // not currently supported in browsers other than Chrome
           modal.style.display = 'none';
         }
       });
-      window.addEventListener('touch', function(event) {
+      modal.addEventListener('touch', function(event) {
+        if (event.target == modal) {
+          // modal.close(); // not currently supported in browsers other than Chrome
+          modal.style.display = 'none';
+        }
+      });
+      modal.addEventListener('touchend', function(event) {
+        if (event.target == modal) {
+          // modal.close(); // not currently supported in browsers other than Chrome
+          modal.style.display = 'none';
+        }
+      });
+      modal.addEventListener('click touch', function(event) {
         if (event.target == modal) {
           // modal.close(); // not currently supported in browsers other than Chrome
           modal.style.display = 'none';
