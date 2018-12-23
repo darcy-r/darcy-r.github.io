@@ -149,6 +149,7 @@ $(document).ready(function(){
           modal.style.display = 'none';
         }
       });
+      /*
       modal.addEventListener('touch', function(event) {
         if (event.target == modal) {
           // modal.close(); // not currently supported in browsers other than Chrome
@@ -161,6 +162,7 @@ $(document).ready(function(){
           modal.style.display = 'none';
         }
       });
+      */
       modal.addEventListener('click touch', function(event) {
         if (event.target == modal) {
           // modal.close(); // not currently supported in browsers other than Chrome
