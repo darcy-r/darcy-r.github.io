@@ -69,7 +69,7 @@ body {
     color: black;
   }
 
-  a.portfolio-link {
+  a.portfolio-link, a.portfolio-weblink {
     font-style: italic;
     text-decoration: underline;
     color: black;
