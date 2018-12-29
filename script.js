@@ -7,6 +7,11 @@ $(document).ready(function(){
   for (let header of breakHeaders) {
     header.addEventListener('click', function() {
       $(this).next().slideToggle();
+      if ($(this).html().substring(0, 1) == '+') {
+        $(this).html('–' + $(this).html().substring(1));
+      } else {
+        $(this).html('+' + $(this).html().substring(1));
+      }
     });
   }
 
